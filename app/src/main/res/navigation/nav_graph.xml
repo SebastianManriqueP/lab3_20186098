@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_entrada_to_historial"
             app:destination="@id/historial" />
+        <action
+            android:id="@+id/action_entrada_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/emergencia"
@@ -42,5 +45,9 @@
         android:name="com.example.lab03.fragment.Historial"
         android:label="fragment_historial"
         tools:layout="@layout/fragment_historial" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.lab03.fragment.MapsFragment"
+        android:label="MapsFragment" />
 
 </navigation>
