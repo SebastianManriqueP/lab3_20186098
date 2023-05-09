@@ -9,11 +9,14 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.example.lab03.R;
 import com.example.lab03.databinding.FragmentEmergenciaBinding;
 
-public class Emergencia extends Fragment {
+public class Emergencia extends Fragment implements AdapterView.OnItemSelectedListener{
 
     private FragmentEmergenciaBinding binding;
     private CountDownTimer countDownTimer;
@@ -31,25 +34,39 @@ public class Emergencia extends Fragment {
         binding = FragmentEmergenciaBinding.inflate(inflater,container,false);
         View root = binding.getRoot();
         /**/
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getContext(),R.array.origen, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.editTextOrigen.setAdapter(adapter1);
+        binding.editTextOrigen.setOnItemSelectedListener(this);
+
+
+        /*hacer funcionar el spinner*/
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.destinos, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinner.setAdapter(adapter);
+        binding.spinner.setOnItemSelectedListener(this);
+
+
         /*Calcular el tiempo y contador*/
         binding.buttonCalcular.setOnClickListener(view -> {
-            if(binding.editTextDestino.getText().toString().equals("lince")){
+            if(binding.spinner.getSelectedItem().toString().equals("lince")){
                 binding.textTiempo.setText("10:00 minutos");
                 this.timeRestanteMili = 600000;
                 startTimer();
-            }else if(binding.editTextDestino.getText().toString().equals("san isidro")){
+            }else if(binding.spinner.getSelectedItem().toString().equals("san isidro")){
                 binding.textTiempo.setText("15:00 minutos");
                 this.timeRestanteMili  = 900000;
                 startTimer();
-            }else if(binding.editTextDestino.getText().toString().equals("magdalena")){
+            }else if(binding.spinner.getSelectedItem().toString().equals("magdalena")){
                 binding.textTiempo.setText("20:00 minutos");
                 this.timeRestanteMili  = 1200000;
                 startTimer();
-            }else if(binding.editTextDestino.getText().toString().equals("jesus maria")){
+            }else if(binding.spinner.getSelectedItem().toString().equals("jesus maria")){
                 binding.textTiempo.setText("25:00 minutos");
                 this.timeRestanteMili  = 1500000;
                 startTimer();
             }
+
 
         });
         return root;
@@ -83,5 +100,15 @@ public class Emergencia extends Fragment {
         tiempoTexto += " minutos";
 
         binding.textTiempo.setText(tiempoTexto);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String text = adapterView.getItemAtPosition(i).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
