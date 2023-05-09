@@ -3,6 +3,7 @@ package com.example.lab03.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -11,9 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
+import com.example.lab03.ExampleViewModel;
+import com.example.lab03.MainActivity;
 import com.example.lab03.R;
 import com.example.lab03.databinding.FragmentRegistroBinding;
+import com.example.lab03.model.Emergencia;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,7 +88,15 @@ public class Registro extends Fragment implements AdapterView.OnItemSelectedList
         /*Cambiar fragment*/
         NavController navController = NavHostFragment.findNavController(Registro.this);
         binding.Registrar.setOnClickListener(view -> {
-            navController.navigate(R.id.action_registro_to_entrada);
+            if(binding.editTextNombreM.getText().toString().equals("") && binding.editTextNombreDuenho.getText().toString().equals("") && binding.editTextNumber.getText().toString().equals("") && binding.editTextTextPersonName3.getText().toString().equals("")){
+                Toast.makeText(getContext(),"Complete todos los campos",Toast.LENGTH_SHORT).show();
+            } else{
+                ExampleViewModel exampleViewModel = new ViewModelProvider(requireActivity())
+                        .get(ExampleViewModel.class);
+                com.example.lab03.model.Emergencia emergencia = new com.example.lab03.model.Emergencia(binding.editTextNombreM.getText().toString(),"Maasculino",binding.editTextNombreDuenho.getText().toString(),binding.editTextNumber.getText().toString(),binding.editTextTextPersonName3.getText().toString());
+                exampleViewModel.getListaPersonas().getValue().add(emergencia);
+                navController.navigate(R.id.action_registro_to_entrada);
+            }
         });
 
         return root;

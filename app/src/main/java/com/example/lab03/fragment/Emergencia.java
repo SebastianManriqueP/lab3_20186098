@@ -19,6 +19,7 @@ public class Emergencia extends Fragment {
     private CountDownTimer countDownTimer;
     private long timeRestanteMili ;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
